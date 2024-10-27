@@ -1,13 +1,23 @@
 <?php
 
-namespace App\Models;
+namespace Felipe\ApiListatarefa\Models;
 
-class User
+use Felipe\ApiListatarefa\DAO\DAO;
+
+class User extends DAO
 {
-    // Exemplo de método que busca usuários no banco de dados (fictício)
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function getUserById($id)
     {
         // Lógica para buscar o usuário no banco de dados
         return ['id' => $id, 'name' => 'Felipe'];
+    }
+
+    public function testeConnection(){
+        return $this->conexao;
     }
 }

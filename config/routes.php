@@ -11,4 +11,5 @@ return function (App $app) {
     });
 
     $app->get('/hello/{name}', [HomeController::class, 'sayHello']);
+    $app->get('/dao', [HomeController::class, 'testedao']);
 };

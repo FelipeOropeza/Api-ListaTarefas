@@ -19,6 +19,7 @@ abstract class DAO
         try {
             $this->conexao = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASS']);
             $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            echo "Conexão ao banco de dados realizada com sucesso!"; // Mensagem de sucesso
         } catch (PDOException $e) {
             echo "Erro ao conectar ao banco de dados: " . $e->getMessage();
             exit;
