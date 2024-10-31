@@ -7,7 +7,7 @@ class UserModel
     private int $id;
     private string $name;
     private string $email;
-    private string $passwordHash;
+    private string $password;
 
     public function __construct(int $id = 0, string $name = '', string $email = '', string $password = '')
     {
@@ -53,9 +53,9 @@ class UserModel
         $this->email = $email;
     }
 
-    public function getPasswordHash(): string
+    public function getPassword(): string
     {
-        return $this->passwordHash;
+        return $this->password;
     }
 
     public function setPassword(string $password): void
@@ -66,6 +66,7 @@ class UserModel
         if (strlen($password) < 8) {
             throw new \InvalidArgumentException("A senha deve ter pelo menos 8 caracteres.");
         }
-        $this->passwordHash = password_hash($password, PASSWORD_DEFAULT); // Armazena o hash da senha
+        $this->password = $password;
+
     }
 }
