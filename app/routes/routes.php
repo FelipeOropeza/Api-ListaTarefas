@@ -8,5 +8,6 @@ return function (App $app) {
         return $response;
     });
 
-    (require __DIR__ . '/userRoutes.php')($app);
+    (require __DIR__ . '/UserRoutes.php')($app);
+    (require __DIR__ . '/AuthRoutes.php')($app);
 };
