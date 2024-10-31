@@ -4,10 +4,11 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Slim\Factory\AppFactory;
 
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 $app = AppFactory::create();
 
-// Incluir as rotas
-(require __DIR__ . '/../config/routes.php')($app);
+(require __DIR__ . '/../routes/routes.php')($app);
 
-// Rodar a aplicação
 $app->run();
