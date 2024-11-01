@@ -22,6 +22,8 @@ COPY . /var/www/html
 # Instala as dependências do Composer
 RUN composer install
 
+RUN echo "DirectoryIndex index.php index.html" >> /etc/apache2/apache2.conf
+
 # Configura a porta e o comando para iniciar o servidor
 EXPOSE 80
 CMD ["apache2-foreground"]
