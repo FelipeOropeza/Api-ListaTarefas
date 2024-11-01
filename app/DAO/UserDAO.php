@@ -12,7 +12,28 @@ class UserDAO extends DAO
         parent::__construct();
     }
 
-    public function insert(UserModel $user): bool
+    public function findById(int $id): ?UserModel
+    {
+        try {
+            $sql = "SELECT * FROM users WHERE id = :id";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+    
+            if ($stmt->rowCount() > 0) {
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                return new UserModel($data['id'], $data['username'], $data['email'], $data['password']);
+            }
+
+            return null;
+    
+        } catch (\PDOException $e) {
+            echo "Erro ao buscar usuário pelo id: " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function insertUser(UserModel $user): bool
     {
         try {
             $sql = "INSERT INTO users (username, email, password) VALUES (:name, :email, :password)";
@@ -39,9 +60,11 @@ class UserDAO extends DAO
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
                 return new UserModel($data['id'], $data['username'], $data['email'], $data['password']);
             }
+
+            return null;
     
         } catch (\PDOException $e) {
-            echo "Erro ao buscar usuário: " . $e->getMessage();
+            echo "Erro ao buscar usuário pelo email: " . $e->getMessage();
             return null;
         }
     }
