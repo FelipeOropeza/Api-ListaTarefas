@@ -19,6 +19,9 @@ WORKDIR /var/www/html
 # Copia os arquivos do projeto para o diretório raiz do servidor
 COPY . /var/www/html
 
+# Copiar o arquivo .env para o contêiner
+COPY .env /var/www/html/
+
 # Instala as dependências do Composer
 RUN composer install
 
