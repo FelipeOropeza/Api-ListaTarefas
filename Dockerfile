@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Define o diretório de trabalho
-WORKDIR /var/www/html/public
+WORKDIR /var/www/html
 
 # Copia os arquivos do projeto para o diretório raiz do servidor
 COPY . /var/www/html
@@ -22,7 +22,7 @@ COPY . /var/www/html
 # Instala as dependências do Composer
 RUN composer install
 
-RUN echo "DirectoryIndex index.php index.html" >> /etc/apache2/apache2.conf
+RUN echo "DirectoryIndex public/index.php public/index.html" >> /etc/apache2/apache2.conf
 
 # Configura a porta e o comando para iniciar o servidor
 EXPOSE 80
