@@ -19,14 +19,23 @@ WORKDIR /var/www/html
 # Copia os arquivos do projeto para o diretório raiz do servidor
 COPY . /var/www/html
 
-# Copiar o arquivo .env para o contêiner
+# Copia o arquivo .env para o contêiner
 COPY .env /var/www/html/
 
 # Instala as dependências do Composer
 RUN composer install
 
-RUN echo "DirectoryIndex public/index.php public/index.html" >> /etc/apache2/apache2.conf
+# Configuração de permissões e acesso ao diretório public
+RUN echo "DirectoryIndex public/index.php" >> /etc/apache2/apache2.conf
+RUN echo "<Directory /var/www/html/public>\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>" >> /etc/apache2/apache2.conf
 
-# Configura a porta e o comando para iniciar o servidor
+# Define as permissões para o Apache
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html
+
+# Expõe a porta 80 e inicia o Apache
 EXPOSE 80
 CMD ["apache2-foreground"]
