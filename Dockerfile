@@ -1,7 +1,7 @@
-# Use uma imagem oficial do PHP com Composer
+# Use uma imagem oficial do PHP com Apache
 FROM php:8.1-apache
 
-# Instala dependências necessárias para o PHP e Composer
+# Instala as dependências necessárias para o PHP e o Composer
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -10,12 +10,17 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && docker-php-ext-install pdo_mysql
 
-# Copie os arquivos da aplicação para o diretório raiz do servidor
+# Instala o Composer globalmente
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Define o diretório de trabalho
+WORKDIR /var/www/html
+
+# Copia os arquivos do projeto para o diretório raiz do servidor
 COPY . /var/www/html
 
 # Instala as dependências do Composer
-WORKDIR /var/www/html
-RUN php composer.phar install
+RUN composer install
 
 # Configura a porta e o comando para iniciar o servidor
 EXPOSE 80
