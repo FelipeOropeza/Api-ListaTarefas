@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Define o diretório de trabalho
-WORKDIR /var/www/html
+WORKDIR /var/www/html/public
 
 # Copia os arquivos do projeto para o diretório raiz do servidor
 COPY . /var/www/html
