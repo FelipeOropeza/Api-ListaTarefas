@@ -22,7 +22,7 @@ class UserDAO extends DAO
     
             if ($stmt->rowCount() > 0) {
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                return new UserModel($data['id'], $data['username'], $data['email'], $data['password']);
+                return new UserModel($data['id'], $data['name'], $data['email'], $data['password']);
             }
 
             return null;
@@ -36,7 +36,7 @@ class UserDAO extends DAO
     public function insertUser(UserModel $user): bool
     {
         try {
-            $sql = "INSERT INTO users (username, email, password) VALUES (:name, :email, :password)";
+            $sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bindValue(':name', $user->getName());
             $stmt->bindValue(':email', $user->getEmail());
@@ -58,7 +58,7 @@ class UserDAO extends DAO
     
             if ($stmt->rowCount() > 0) {
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                return new UserModel($data['id'], $data['username'], $data['email'], $data['password']);
+                return new UserModel($data['id'], $data['name'], $data['email'], $data['password']);
             }
 
             return null;

@@ -14,12 +14,13 @@ class UserController
         try {
             $body = $request->getBody()->getContents();
             $data = json_decode($body, true);
+            $passwordHash = password_hash($data['password'], PASSWORD_BCRYPT);
 
             $user = new UserModel(
                 0,
                 $data['name'],
                 $data['email'],
-                $data['password']
+                $passwordHash
             );
 
             $userDAO = new UserDAO();
