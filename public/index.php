@@ -12,6 +12,6 @@ TokenHelper::initializeKey();
 
 $app = AppFactory::create();
 
-(require __DIR__ . '../../app/routes/routes.php')($app);
+(require __DIR__ . '../../app/Routes/Routes.php')($app);
 
 $app->run();
