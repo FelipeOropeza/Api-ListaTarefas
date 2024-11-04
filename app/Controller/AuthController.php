@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Felipe\ApiListatarefa\DAO\UserDAO;
 use Felipe\ApiListatarefa\Helper\TokenHelper;
+use PasswordHelper;
 
 class AuthController
 {
@@ -24,7 +25,7 @@ class AuthController
 
             $user = $userDAO->findByEmail($data['email']);
 
-            if (!$user || !password_verify($data['password'], $user->getPassword())) {
+            if (!$user || !PasswordHelper::verifyPassword($data['password'], $user->getPassword())) {
                 $response->getBody()->write(json_encode(["message" => "Email ou senha inválidos."], JSON_UNESCAPED_UNICODE));
                 return $response->withStatus(401);
             }
