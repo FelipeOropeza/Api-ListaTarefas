@@ -4,13 +4,13 @@ namespace Felipe\ApiListatarefa\Model;
 
 class TaskModel
 {
-    private int $id;
-    private int $userid;
-    private string $title;
-    private string $description;
-    private string $status;
-    private string $priority;
-    private ?string $due_date;
+    private int $id = 0;
+    private int $userid = 0;
+    private string $title = '';
+    private string $description = '';
+    private string $status = 'pendente';
+    private string $priority = 'media';
+    private ?string $due_date = null;
 
     public function __construct(
         int $id = 0,
@@ -25,8 +25,8 @@ class TaskModel
         $this->setUserId($userid);
         $this->setTitle($title);
         $this->setDescription($description);
-        $this->setStatus($status);
-        $this->setPriority($priority);
+        $this->setStatus($status ?: 'pendente');
+        $this->setPriority($priority ?: 'media');
         $this->setDueDate($due_date);
     }
 
@@ -84,11 +84,19 @@ class TaskModel
         return $this->status;
     }
 
-    public function setStatus(string $status): void
+    public function setStatus(?string $status): void
     {
+        $arrayStatus = ["pendente", "em_progresso", "concluida"];
+
         if (empty(trim($status))) {
-            throw new \InvalidArgumentException("O status não pode estar vazio.");
+            $this->status = 'pendente';
+            return;
         }
+
+        if (!in_array($status, $arrayStatus)) {
+            throw new \InvalidArgumentException("Status inválido.");
+        }
+
         $this->status = $status;
     }
 
@@ -97,11 +105,19 @@ class TaskModel
         return $this->priority;
     }
 
-    public function setPriority(string $priority): void
+    public function setPriority(?string $priority): void
     {
+        $arrayPriority = ["baixa", "media", "alta"];
+
         if (empty(trim($priority))) {
-            throw new \InvalidArgumentException("O prioridade não pode estar vazia.");
+            $this->priority = 'media';
+            return;
         }
+
+        if (!in_array($priority, $arrayPriority)) {
+            throw new \InvalidArgumentException("Prioridade inválida.");
+        }
+
         $this->priority = $priority;
     }
 
