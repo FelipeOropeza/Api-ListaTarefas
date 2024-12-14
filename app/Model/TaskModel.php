@@ -4,21 +4,21 @@ namespace Felipe\ApiListatarefa\Model;
 
 class TaskModel
 {
-    private int $id = 0;
-    private int $userid = 0;
-    private string $title = '';
-    private string $description = '';
-    private string $status = 'pendente';
-    private string $priority = 'media';
-    private ?string $due_date = null;
+    private int $id;
+    private int $userid;
+    private string $title;
+    private string $description;
+    private string $status;
+    private string $priority;
+    private ?string $due_date;
 
     public function __construct(
         int $id = 0,
         int $userid = 0,
         string $title = '',
         string $description = '',
-        string $status = '',
-        string $priority = '',
+        string $status = 'pendente',
+        string $priority = 'media',
         ?string $due_date = null,
     ) {
         $this->setId($id);

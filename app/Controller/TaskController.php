@@ -12,6 +12,20 @@ class TaskController
     public function createTask(Request $request, Response $response)
     {
         try {
+            $body = $request->getBody()->getContents();
+            $data = json_decode($body, true);
+
+            $task = new TaskModel(
+                0,
+                $data["userId"],
+                $data["title"],
+                $data["description"],
+                $data["status"] ?? 'pendente',
+                $data["priority"] ?? 'media',
+                $data["due_date"]
+            );
+
+            var_dump($task);
         } catch (\InvalidArgumentException $e) {
             $response->getBody()->write(json_encode(["message" => $e->getMessage()], JSON_UNESCAPED_UNICODE));
             return $response->withStatus(400);
