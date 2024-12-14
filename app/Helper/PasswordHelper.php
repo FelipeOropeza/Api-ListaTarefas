@@ -1,5 +1,7 @@
 <?php
 
+namespace Felipe\ApiListatarefa\Helper;
+
 class PasswordHelper {
     public static function hashPassword($password) {
         return password_hash($password, PASSWORD_BCRYPT);

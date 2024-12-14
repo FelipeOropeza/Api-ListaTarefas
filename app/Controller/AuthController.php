@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Felipe\ApiListatarefa\DAO\UserDAO;
 use Felipe\ApiListatarefa\Helper\TokenHelper;
-use PasswordHelper;
+use Felipe\ApiListatarefa\Helper\PasswordHelper;
 
 class AuthController
 {
