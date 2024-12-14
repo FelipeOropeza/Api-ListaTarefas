@@ -11,8 +11,6 @@ class TaskModel
     private string $status = 'pendente';
     private string $priority = 'media';
     private ?string $due_date = null;
-    
-    private ?UserModel $user = null;
 
     public function __construct(
         int $id = 0,
@@ -22,7 +20,6 @@ class TaskModel
         string $status = '',
         string $priority = '',
         ?string $due_date = null,
-        ?UserModel $user = null
     ) {
         $this->setId($id);
         $this->setUserId($userid);
@@ -31,7 +28,6 @@ class TaskModel
         $this->setStatus($status ?: 'pendente');
         $this->setPriority($priority ?: 'media');
         $this->setDueDate($due_date);
-        $this->setUser($user);
     }
 
     public function getId(): int
@@ -133,15 +129,5 @@ class TaskModel
     public function setDueDate(?string $due_date): void
     {
         $this->due_date = $due_date;
-    }
-
-    public function getUser(): ?UserModel
-    {
-        return $this->user;
-    }
-
-    public function setUser(?UserModel $user): void
-    {
-        $this->user = $user;
     }
 }
