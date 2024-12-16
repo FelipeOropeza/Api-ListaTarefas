@@ -31,4 +31,16 @@ class TaskController
             return $response->withStatus(400);
         }
     }
+
+    public function getAllTask(Request $request, Response $response, $args){
+        try {
+            $userId = (int) $args['id'];
+            var_dump($userId);
+            
+            return $response->withStatus(200);
+        } catch (\InvalidArgumentException $e) {
+            $response->getBody()->write(json_encode(["message" => $e->getMessage()], JSON_UNESCAPED_UNICODE));
+            return $response->withStatus(400);
+        }
+    }
 }

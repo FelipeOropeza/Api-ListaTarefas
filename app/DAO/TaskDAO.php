@@ -17,7 +17,7 @@ class TaskDAO extends DAO
         try {
             $sql = "INSERT INTO tasks (user_id, title, description, status, priority, due_date) VALUES (:user_id, :title, :description, :status, :priority, :due_date)";
             $stmt = $this->conexao->prepare($sql);
-            $stmt->bindValue(':user_id', $task->getUser()->getId());
+            $stmt->bindValue(':user_id', $task->getUserId());
             $stmt->bindValue(':title', $task->getTitle());
             $stmt->bindValue(':description', $task->getDescription());
             $stmt->bindValue(':status', $task->getStatus());
