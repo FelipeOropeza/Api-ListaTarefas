@@ -22,24 +22,73 @@ class TaskController
                 $data["description"],
                 $data["status"] ?? 'pendente',
                 $data["priority"] ?? 'media',
-                $data["due_date"]
+                $data["due_date"] ?? null
             );
 
-            var_dump($task);
+            $taskDAO = new TaskDAO();
+            if ($taskDAO->insertTask($task)) {
+                $response->getBody()->write(json_encode(["message" => "Tarefa criada com sucesso!"], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(201);
+            } else {
+                $response->getBody()->write(json_encode(["message" => "Erro ao criar Tarefa."], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(500);
+            }
         } catch (\InvalidArgumentException $e) {
             $response->getBody()->write(json_encode(["message" => $e->getMessage()], JSON_UNESCAPED_UNICODE));
             return $response->withStatus(400);
         }
     }
 
-    public function getAllTask(Request $request, Response $response, $args){
+    public function getAllTask(Request $request, Response $response, $args)
+    {
         try {
             $userId = (int) $args['id'];
-            var_dump($userId);
-            
+            $taksDAO = new TaskDAO();
+            $tasks = $taksDAO->findAllTasks($userId);
+
+            if (!$tasks) {
+                $response->getBody()->write(json_encode(["message" => "As Tarefas não foram encontradas."], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(404);
+            }
+
+            $response->getBody()->write(json_encode(
+                array_map(function ($task) {
+                    return [
+                        'id' => $task->getId(),
+                        'user_id' => $task->getUserId(),
+                        'title' => $task->getTitle(),
+                        'description' => $task->getDescription(),
+                        'status' => $task->getStatus(),
+                        'priority' => $task->getPriority(),
+                        'due_date' => $task->getDueDate(),
+                    ];
+                }, $tasks),
+                JSON_UNESCAPED_UNICODE
+            ));
+
+
             return $response->withStatus(200);
         } catch (\InvalidArgumentException $e) {
-            $response->getBody()->write(json_encode(["message" => $e->getMessage()], JSON_UNESCAPED_UNICODE));
+            $response->getBody()->write(json_encode(["message" => $e->getMessage()], flags: JSON_UNESCAPED_UNICODE));
+            return $response->withStatus(400);
+        }
+    }
+
+    public function deleteTask(Request $request, Response $response, $args)
+    {
+        try {
+            $taskId = (int) $args['id'];
+            $taksDAO = new TaskDAO();
+
+            if ($taksDAO->deleteTask($taskId)) {
+                $response->getBody()->write(json_encode(["message" => "Tarefa deletada com sucesso!"], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(200);
+            } else {
+                $response->getBody()->write(json_encode(["message" => "Não foi possível deletar a tarefa: tarefa não encontrada."], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(404);
+            }
+        } catch (\InvalidArgumentException $e) {
+            $response->getBody()->write(json_encode(["message" => $e->getMessage()], flags: JSON_UNESCAPED_UNICODE));
             return $response->withStatus(400);
         }
     }

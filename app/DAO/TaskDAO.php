@@ -29,4 +29,54 @@ class TaskDAO extends DAO
             return false;
         }
     }
+
+    public function findAllTasks(int $id)
+    {
+        try {
+            $sql = "SELECT * FROM tasks WHERE user_id = :id";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $tasks = [];
+                while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $tasks[] = new TaskModel(
+                        $data['id'],
+                        $data['user_id'],
+                        $data['title'],
+                        $data['description'],
+                        $data['status'],
+                        $data['priority'],
+                        $data['due_date'],
+                    );
+                }
+                return $tasks;
+            }
+            return null;
+        } catch (\PDOException $e) {
+            echo "Erro ao buscar as tarefas pelo id do usuário: " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function deleteTask(int $id)
+{
+    try {
+        $sql = "DELETE FROM tasks WHERE id = :id";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() === 0) {
+            return false;
+        }
+
+        return true;
+    } catch (\PDOException $e) {
+        echo "Erro ao deletar tarefa: " . $e->getMessage();
+        return false;
+    }
+}
+
 }
