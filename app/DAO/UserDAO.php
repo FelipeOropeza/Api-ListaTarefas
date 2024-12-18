@@ -12,7 +12,7 @@ class UserDAO extends DAO
         parent::__construct();
     }
 
-    public function findById(int $id): ?UserModel
+    public function findById(int $id)
     {
         try {
             $sql = "SELECT * FROM users WHERE id = :id";
@@ -32,7 +32,7 @@ class UserDAO extends DAO
         }
     }
 
-    public function insertUser(UserModel $user): bool
+    public function insertUser(UserModel $user)
     {
         try {
             $sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
@@ -47,7 +47,7 @@ class UserDAO extends DAO
         }
     }
 
-    public function updateUser(UserModel $user): bool
+    public function updateUser(UserModel $user)
     {
         try {
             $sql = "UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id";
@@ -63,20 +63,27 @@ class UserDAO extends DAO
         }
     }
 
-    public function deleteUser(int $id): bool
-    {
-        try {
-            $sql = "DELETE FROM users WHERE id = :id";
-            $stmt = $this->conexao->prepare($sql);
-            $stmt->bindValue(':id', $id);
-            return $stmt->execute();
-        } catch (\PDOException $e) {
-            echo "Erro ao deletar usuário: " . $e->getMessage();
+    public function deleteUser(int $id)
+{
+    try {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() === 0) {
             return false;
         }
-    }
 
-    public function findByEmail(string $email): ?UserModel
+        return true;
+    } catch (\PDOException $e) {
+        echo "Erro ao deletar usuário: " . $e->getMessage();
+        return false;
+    }
+}
+
+
+    public function findByEmail(string $email)
     {
         try {
             $sql = "SELECT * FROM users WHERE email = :email";

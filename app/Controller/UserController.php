@@ -10,7 +10,7 @@ use Felipe\ApiListatarefa\Helper\PasswordHelper;
 
 class UserController
 {
-    public function createUser(Request $request, Response $response): Response
+    public function createUser(Request $request, Response $response)
     {
         try {
             $body = $request->getBody()->getContents();
@@ -38,7 +38,7 @@ class UserController
         }
     }
 
-    public function getUserById(Request $request, Response $response, $args): Response
+    public function getUserById(Request $request, Response $response, $args)
     {
         try {
             $userId = (int) $args['id'];
@@ -63,7 +63,7 @@ class UserController
         }
     }
 
-    public function updateUser(Request $request, Response $response, $args): Response
+    public function updateUser(Request $request, Response $response, $args)
     {
         try {
             $body = $request->getBody()->getContents();
@@ -91,7 +91,7 @@ class UserController
             return $response->withStatus(400);
         }
     }
-    public function deleteUser(Request $request, Response $response, $args): Response
+    public function deleteUser(Request $request, Response $response, $args)
     {
         try {
             $userId = (int) $args['id'];

@@ -10,7 +10,7 @@ use Felipe\ApiListatarefa\Helper\PasswordHelper;
 
 class AuthController
 {
-    public function login(Request $request, Response $response, $args): Response
+    public function login(Request $request, Response $response, $args)
     {
         try {
             $body = $request->getBody()->getContents();
@@ -45,7 +45,7 @@ class AuthController
         }
     }
 
-    public function logout(Request $request, Response $response, $args): Response
+    public function logout(Request $request, Response $response, $args)
     {
         $response->getBody()->write(json_encode(["message" => "Logout realizado com sucesso."], JSON_UNESCAPED_UNICODE));
         return $response->withStatus(200);
