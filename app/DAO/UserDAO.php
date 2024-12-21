@@ -56,7 +56,13 @@ class UserDAO extends DAO
             $stmt->bindValue(':name', $user->getName());
             $stmt->bindValue(':email', $user->getEmail());
             $stmt->bindValue(':password', $user->getPassword());
-            return $stmt->execute();
+            $stmt->execute();
+
+            if ($stmt->rowCount() === 0) {
+                return false;
+            }
+
+            return true;
         } catch (\PDOException $e) {
             echo "Erro ao atualizar usuário: " . $e->getMessage();
             return false;

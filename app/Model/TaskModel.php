@@ -5,7 +5,7 @@ namespace Felipe\ApiListatarefa\Model;
 class TaskModel
 {
     private int $id;
-    private int $userid;
+    private int $user_id;
     private string $title;
     private string $description;
     private string $status;
@@ -14,7 +14,7 @@ class TaskModel
 
     public function __construct(
         int $id = 0,
-        int $userid = 0,
+        int $user_id = 0,
         string $title = '',
         string $description = '',
         string $status = 'pendente',
@@ -22,7 +22,7 @@ class TaskModel
         ?string $due_date = null,
     ) {
         $this->setId($id);
-        $this->setUserId($userid);
+        $this->setUserId($user_id);
         $this->setTitle($title);
         $this->setDescription($description);
         $this->setStatus($status ?: 'pendente');
@@ -42,7 +42,7 @@ class TaskModel
 
     public function getUserId(): int
     {
-        return $this->userid;
+        return $this->user_id;
     }
 
     public function setUserId(int $userid): void
@@ -50,7 +50,7 @@ class TaskModel
         if (empty($userid)) {
             throw new \InvalidArgumentException("O Id do Usuario não pode estar vazio.");
         }
-        $this->userid = $userid;
+        $this->user_id = $userid;
     }
 
     public function getTitle(): string

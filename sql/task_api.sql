@@ -11,7 +11,7 @@ create table users (
 
 create table tasks (
     id int primary key auto_increment,
-    user_id int not null,
+    userid int not null,
     title varchar(255) not null,
     description text,
     status enum('pendente', 'em_progresso', 'concluida') default 'pendente',
@@ -19,7 +19,7 @@ create table tasks (
     due_date date,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp on update current_timestamp,
-    foreign key (user_id)
+    foreign key (userid)
         references users (id)
         on delete cascade
 );

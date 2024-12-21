@@ -60,23 +60,46 @@ class TaskDAO extends DAO
         }
     }
 
-    public function deleteTask(int $id)
-{
-    try {
-        $sql = "DELETE FROM tasks WHERE id = :id";
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
+    public function updateTask(TaskModel $task){
+        try {
+            $sql = "UPDATE tasks SET title = :title, description = :description, status = :status, priority = :priority, due_date = :due_date WHERE user_id = :user_id AND id = :id";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":title", $task->getTitle());
+            $stmt->bindValue(":description", $task->getDescription());
+            $stmt->bindValue(":status", $task->getStatus());
+            $stmt->bindValue(":priority", $task->getPriority());
+            $stmt->bindValue(":due_date", $task->getDueDate());
+            $stmt->bindValue(":user_id", $task->getUserId());
+            $stmt->bindValue(":id", $task->getId());
+            $stmt->execute();
 
-        if ($stmt->rowCount() === 0) {
+            if ($stmt->rowCount() === 0) {
+                return false;
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            echo "Erro ao atualizar tarefa: " . $e->getMessage();
             return false;
         }
-
-        return true;
-    } catch (\PDOException $e) {
-        echo "Erro ao deletar tarefa: " . $e->getMessage();
-        return false;
     }
-}
 
+    public function deleteTask(int $id)
+    {
+        try {
+            $sql = "DELETE FROM tasks WHERE id = :id";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            if ($stmt->rowCount() === 0) {
+                return false;
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            echo "Erro ao deletar tarefa: " . $e->getMessage();
+            return false;
+        }
+    }
 }

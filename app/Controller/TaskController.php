@@ -17,7 +17,7 @@ class TaskController
 
             $task = new TaskModel(
                 0,
-                $data["userId"],
+                $data["user_id"],
                 $data["title"],
                 $data["description"],
                 $data["status"] ?? 'pendente',
@@ -79,19 +79,26 @@ class TaskController
             $body = $request->getBody()->getContents();
             $data = json_decode($body, true);
             $taskId = (int) $args['id'];
-            $taksDAO = new TaskDAO();
-
+            
             $taks = new TaskModel(
                 $taskId,
-                $data['userId'],
+                $data['user_id'],
                 $data['title'],
                 $data['description'],
                 $data['status'],
                 $data['priority'],
                 $data['due_date'] ?? null,
             );
+            
+            $taksDAO = new TaskDAO();
 
-            var_dump($taks);
+            if($taksDAO->updateTask($taks)){
+                $response->getBody()->write(json_encode(["message" => "Tarefa atualizada com sucesso!"], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(200);
+            } else {
+                $response->getBody()->write(json_encode(["message" => "Não foi possível atualizar a tarefa: tarefa não encontrada."], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(404);
+            }
 
         } catch (\InvalidArgumentException $e) {
             $response->getBody()->write(json_encode(["message" => $e->getMessage()], flags: JSON_UNESCAPED_UNICODE));
