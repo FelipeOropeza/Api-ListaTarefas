@@ -74,6 +74,31 @@ class TaskController
         }
     }
 
+    public function updateTask(Request $request, Response $response, $args){
+        try {
+            $body = $request->getBody()->getContents();
+            $data = json_decode($body, true);
+            $taskId = (int) $args['id'];
+            $taksDAO = new TaskDAO();
+
+            $taks = new TaskModel(
+                $taskId,
+                $data['userId'],
+                $data['title'],
+                $data['description'],
+                $data['status'],
+                $data['priority'],
+                $data['due_date'] ?? null,
+            );
+
+            var_dump($taks);
+
+        } catch (\InvalidArgumentException $e) {
+            $response->getBody()->write(json_encode(["message" => $e->getMessage()], flags: JSON_UNESCAPED_UNICODE));
+            return $response->withStatus(400);
+        }
+    }
+
     public function deleteTask(Request $request, Response $response, $args)
     {
         try {
