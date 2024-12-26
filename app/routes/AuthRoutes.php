@@ -1,6 +1,6 @@
 <?php
 
-use Felipe\ApiListatarefa\Controller\AuthController;
+use App\Controller\AuthController;
 use Slim\App;
 
 return function (App $app) {

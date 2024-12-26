@@ -1,12 +1,12 @@
 <?php
 
-namespace Felipe\ApiListatarefa\Controller;
+namespace App\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Felipe\ApiListatarefa\DAO\UserDAO;
-use Felipe\ApiListatarefa\Helper\TokenHelper;
-use Felipe\ApiListatarefa\Helper\PasswordHelper;
+use App\DAO\UserDAO;
+use App\Helper\TokenHelper;
+use App\Helper\PasswordHelper;
 
 class AuthController
 {

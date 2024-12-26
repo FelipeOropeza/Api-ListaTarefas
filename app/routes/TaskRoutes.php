@@ -1,7 +1,7 @@
 <?php
 
-use Felipe\ApiListatarefa\Controller\TaskController;
-use Felipe\ApiListatarefa\Middleware\TokenMiddleware;
+use App\Controller\TaskController;
+use App\Middleware\TokenMiddleware;
 use Slim\App;
 
 return function (App $app) {

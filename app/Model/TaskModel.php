@@ -1,8 +1,8 @@
 <?php
 
-namespace Felipe\ApiListatarefa\Model;
+namespace App\Model;
 
-class TaskModel
+readonly final class TaskModel
 {
     private int $id;
     private int $user_id;

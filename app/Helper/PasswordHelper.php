@@ -1,6 +1,6 @@
 <?php
 
-namespace Felipe\ApiListatarefa\Helper;
+namespace App\Helper;
 
 class PasswordHelper {
     public static function hashPassword($password) {

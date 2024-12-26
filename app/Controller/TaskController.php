@@ -1,11 +1,11 @@
 <?php
 
-namespace Felipe\ApiListatarefa\Controller;
+namespace App\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Felipe\ApiListatarefa\Model\TaskModel;
-use Felipe\ApiListatarefa\DAO\TaskDAO;
+use App\Model\TaskModel;
+use App\DAO\TaskDAO;
 
 class TaskController
 {

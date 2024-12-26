@@ -1,7 +1,7 @@
 <?php
 
-use Felipe\ApiListatarefa\Controller\UserController;
-use Felipe\ApiListatarefa\Middleware\TokenMiddleware;
+use App\Controller\UserController;
+use App\Middleware\TokenMiddleware;
 use Slim\App;
 
 return function (App $app) {

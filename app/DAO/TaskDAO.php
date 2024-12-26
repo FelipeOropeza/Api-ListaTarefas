@@ -1,9 +1,9 @@
 <?php
 
-namespace Felipe\ApiListatarefa\DAO;
+namespace App\DAO;
 
 use PDO;
-use Felipe\ApiListatarefa\Model\TaskModel;
+use App\Model\TaskModel;
 
 class TaskDAO extends DAO
 {

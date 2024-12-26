@@ -1,9 +1,9 @@
 <?php
 
-namespace Felipe\ApiListatarefa\DAO;
+namespace App\DAO;
 
 use PDO;
-use Felipe\ApiListatarefa\Model\UserModel;
+use App\Model\UserModel;
 
 class UserDAO extends DAO
 {

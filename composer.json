@@ -2,7 +2,7 @@
   "name": "felipe/api-listatarefa",
   "autoload": {
     "psr-4": {
-      "Felipe\\ApiListatarefa\\": "app/"
+      "App\\": "app/"
     }
   },
   "authors": [

@@ -1,8 +1,8 @@
 <?php
 
-namespace Felipe\ApiListatarefa\Model;
+namespace App\Model;
 
-class UserModel
+readonly final class UserModel
 {
     private int $id;
     private string $name;
