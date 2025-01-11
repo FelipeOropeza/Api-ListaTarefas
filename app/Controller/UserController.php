@@ -25,12 +25,14 @@ class UserController
             );
 
             $userDAO = new UserDAO();
-            if ($userDAO->insertUser($user)) {
+            $insertResult = $userDAO->insertUser($user);
+
+            if ($insertResult === true) {
                 $response->getBody()->write(json_encode(["message" => "Usuário criado com sucesso!"], JSON_UNESCAPED_UNICODE));
                 return $response->withStatus(201);
             } else {
-                $response->getBody()->write(json_encode(["message" => "Erro ao criar usuário."], JSON_UNESCAPED_UNICODE));
-                return $response->withStatus(500);
+                $response->getBody()->write(json_encode(["message" => $insertResult], JSON_UNESCAPED_UNICODE));
+                return $response->withStatus(400);
             }
         } catch (\InvalidArgumentException $e) {
             $response->getBody()->write(json_encode(["message" => $e->getMessage()], JSON_UNESCAPED_UNICODE));

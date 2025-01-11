@@ -40,10 +40,14 @@ class UserDAO extends DAO
             $stmt->bindValue(':name', $user->getName());
             $stmt->bindValue(':email', $user->getEmail());
             $stmt->bindValue(':password', $user->getPassword());
-            return $stmt->execute();
+            $stmt->execute();
+            return true;
         } catch (\PDOException $e) {
-            echo "Erro ao inserir usuário: " . $e->getMessage();
-            return false;
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                return 'Nome de usuário ou e-mail já está em uso. Tente outro.';
+            } else {
+                return 'Erro ao inserir usuário: ' . $e->getMessage();
+            }
         }
     }
 
@@ -70,23 +74,23 @@ class UserDAO extends DAO
     }
 
     public function deleteUser(int $id)
-{
-    try {
-        $sql = "DELETE FROM users WHERE id = :id";
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
+    {
+        try {
+            $sql = "DELETE FROM users WHERE id = :id";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
 
-        if ($stmt->rowCount() === 0) {
+            if ($stmt->rowCount() === 0) {
+                return false;
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            echo "Erro ao deletar usuário: " . $e->getMessage();
             return false;
         }
-
-        return true;
-    } catch (\PDOException $e) {
-        echo "Erro ao deletar usuário: " . $e->getMessage();
-        return false;
     }
-}
 
 
     public function findByEmail(string $email)
